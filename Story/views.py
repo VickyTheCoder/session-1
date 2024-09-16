@@ -19,10 +19,10 @@ def save(request):
         story = request.session.get('story')
         try:
             c = Content(title=title, story=story)
-            1/0
+            # 1/0# to check failure
             c.save()
         except Exception as e:
-            status = "DB update failed"
+            status = f"DB update failed - {e}"
             code = 500
             return JsonResponse({'error': status}, status=code)
         else:
