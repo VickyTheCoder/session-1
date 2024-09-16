@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StoryHub</title>
-</head>
-<body>
-    <strong>Website - Under Construction</strong>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>StoryHub</title>
+        {% if is_active == False %}
+            <meta name="csrf1" content={{csrf_token}}>
+        {% else %}
+            <meta name="csrf2" content={{active_csrf_token}}>
+        {% endif %}
+    </head>
+    <body>
+        <div id="StoryBoard">
+            <input type="text" id="title"><br>
+            <textarea id="story"></textarea><br>
+            <input type="button" value="Save">
+        </div>
+    </body>
 </html>
