@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.urls import path
 from FrontEnd.views import homepage
-from Story.views import set_session
+from Story.views import set_session, save
 urlpatterns = [
     path('', homepage),
     path('session/set', set_session),
+    path('db/save', save),
 ]

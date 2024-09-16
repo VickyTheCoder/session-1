@@ -44,6 +44,25 @@
                 );
 
             }
+            function save(){
+                $.ajax(
+                    {
+                        url: 'db/save',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRFToken': $('meta[name="csrf"]').attr('content')
+                        },
+                        success: function(response){
+                            $("#status").text(response['status']);
+                        },
+                        error: function(xhr, status, err){
+                            var txt = '';
+                            var msg = JSON.parse(xhr.responseText);
+                            $("status").text(msg.error); 
+                        }
+                    }
+                );
+            }
         </script>
     </body>
 </html>
