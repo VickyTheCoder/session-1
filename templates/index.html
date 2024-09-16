@@ -5,16 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>StoryHub</title>
         {% if is_active == False %}
-            <meta name="csrf1" content={{csrf_token}}>
+            <meta name="csrf" content={{csrf_token}}>
         {% else %}
-            <meta name="csrf2" content={{active_csrf_token}}>
+            <meta name="csrf" content={{active_csrf_token}}>
         {% endif %}
+        <script 
+            src="https://code.jquery.com/jquery-3.7.1.min.js" 
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+            crossorigin="anonymous">
+        </script>
     </head>
     <body>
         <div id="StoryBoard">
-            <input type="text" id="title"><br>
-            <textarea id="story"></textarea><br>
-            <input type="button" value="Save">
+            <input type="text" onfocusout="set_session('title')" id="title" value={{title}}><br>
+            <textarea id="story" onfocusout="set_session('story')">{{story}}</textarea><br>
+            <input type="button" onclick="save()" value="Save">
         </div>
+        <div>
+            <font id="status"></font>
+        </div>
+        <script>
+            function set_session(key){
+                var k = $('#'+key).val();
+                var d = {[key]: k};
+                // console.log(d);
+                $.ajax(
+                    {
+                        url: 'session/set',
+                        type: 'POST',
+                        data: d,
+                        headers: {
+                            'X-CSRFToken': $('meta[name="csrf"]').attr('content')
+                        },
+                        success: function(response){
+                            console.log(key+":"+k+ " - session updated");
+                        }
+                    }
+                );
+
+            }
+        </script>
     </body>
 </html>
